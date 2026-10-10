@@ -1048,7 +1048,10 @@ public class CameraCaptureSessionImpl extends CameraCaptureSession
 
                 // Fast path: A new capture session has replaced this one; don't wait for idle
                 // as we won't get state updates any more anyway.
-                if (mSkipUnconfigure) {
+                if (mSkipUnconfigure
+                            // OPlus CamX fails to configure the fake stream used to unconfigure
+                            || "com.oplus.camera".equals(
+                                    android.app.ActivityThread.currentOpPackageName())) {
                     return;
                 }
 
